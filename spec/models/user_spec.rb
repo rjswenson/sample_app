@@ -22,6 +22,11 @@ describe User do
     it {should_not be_valid}
   end
 
+  describe "remember_token" do    #check for a valid token
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
+
   describe "when email is not present" do
     before { @user.email = " "}
     it {should_not be_valid}
