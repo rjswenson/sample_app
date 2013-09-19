@@ -23,9 +23,7 @@ describe "Authentication" do
     describe "with valid information" do
       let(:user) {FactoryGirl.create(:user) }
       before do
-        fill_in "Email",     with: user.email.upcase
-        fill_in "Password",  with: user.password
-        click_button "Sign in"
+        sign_in user
       end
 
       it { should have_title(user.name) }
@@ -37,6 +35,21 @@ describe "Authentication" do
       describe "followed by a signout" do
         before { click_link "Sign out" }
         it { should have_link('Sign in') }
+      end
+
+      describe "authorization" do
+
+        describe "for non-signed-in users" do
+          let(:user) { FactoryGirl.create(:user) }
+          
+          describe "in the Users controller" do
+            
+            describe "submitting to the update action" do
+              before { patch user_path(user) }
+              specify { expect(response).to redirect_to(signin_path) }
+            end
+          end
+        end
       end
     end
   end
