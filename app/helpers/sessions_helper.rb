@@ -21,6 +21,10 @@ module SessionsHelper
     @current_user ||= User.find_by(remember_token: remember_token)
   end
 
+  def current_user?(user)  #returns true if user eq to cookied current user
+    user == current_user
+  end
+
   def signed_in?  #returns false if no current user is logged in
     !current_user.nil?
   end
