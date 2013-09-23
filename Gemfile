@@ -5,6 +5,9 @@ gem 'rails', '4.0.0'
 gem 'bootstrap-sass', '2.3.2.0'              #adds twitter-style sass/scss design
 gem 'bcrypt-ruby', '3.0.1'                   #allows for easy pwd encription
 gem 'faker', '1.1.2'                         #creates realistic users for db testing
+gem 'will_paginate', '3.0.4'                 #for easy pagination
+gem 'bootstrap-will_paginate', '0.0.9'       #bootstrap paginate support
+
 group :development, :test do
   gem 'sqlite3', '1.3.7'
   gem 'rspec-rails', '2.13.1'                #Rspec for tests

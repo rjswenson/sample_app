@@ -39,7 +39,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
+    #User.paginate takes Users one chunk at a time and assigns
+    #a page to these chunks (default 30 per page)
   end
 
  private
