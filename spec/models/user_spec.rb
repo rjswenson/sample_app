@@ -20,6 +20,30 @@ describe User do
   it {should be_valid}
   it {should_not be_admin}
 
+  describe "micropost associations" do
+
+    before { @user.save }
+    let!(:older_micropost) do
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_micropost) do
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should be newest to oldest order" do
+      expect(@user.microposts.to_a).to eq [newer_micropost, older_micropost]
+    end
+
+    it "should destroy associated microposts" do  #user destroy = micro destroy
+      microposts = @user.microposts.to_a
+      @user.destroy
+      expect(microposts).not_to be_empty
+      microposts.each do |micro|
+        expect(Micropost.where(id: micro.id)).to be_empty
+      end
+    end
+  end
+
   describe " with admin attributes set to TRUE" do
     before do
       @user.save!

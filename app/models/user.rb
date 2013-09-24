@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :microposts
+  has_many :microposts, dependent: :destroy  #ties micropost destroy to user destroy
   before_save { self.email = email.downcase } #downcase email before saving to database
   before_create :create_remember_token   #creates remember token for new user
 
