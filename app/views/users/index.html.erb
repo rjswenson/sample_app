@@ -1,12 +1,10 @@
 <% provide(:title, 'All users') %> 
 <h1>All users</h1>
 
-<%= will_paginate %>            #creates paginated links above
+<%= will_paginate %>
 
 <ul class="users">
-  <% @users.each do |user| %>
-    <%= render @users %>        #Rails infers @users is User class list
-  <% end %>                     #so will render partial called _user for ea
+  <%= render @users %>
 </ul>
 
-<%= will_paginate %>            #creates paginated links below
+<%= will_paginate %>
