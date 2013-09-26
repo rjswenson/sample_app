@@ -51,10 +51,21 @@ describe "Authentication" do
         end
       end
 
-
       describe "for non-signed-in users" do
         let(:user) { FactoryGirl.create(:user) }
         
+        describe "in Microposts controller" do
+          describe "submitting a create action" do
+            before { post microposts_path }
+            specify {expect(response).to redirect_to(signin_path) }
+          end
+
+          describe "submitting a destroy action" do
+            before { delete micropost_path(FactoryGirl.create(:micropost)) }
+            specify { expect(response).to redirect_to(signin_path) }
+          end
+        end
+
         describe "when attempting to visit protected page" do  #friendly forwarding
           before do
             visit edit_user_path(user)
