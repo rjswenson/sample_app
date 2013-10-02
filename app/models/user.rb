@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :microposts, dependent: :destroy  #ties micropost destroy to user destroy
+  has_many :microposts, dependent: :destroy  #if a user is destroyed, microposts from them will be destroyed
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed  #source OVERRIDES default of user.followeds since its unnatural
+  #has_many through looks for a foreign key tied to singular of association (followeds/followed_users)
   before_save { self.email = email.downcase } #downcase email before saving to database
   before_create :create_remember_token   #creates remember token for new user
 
